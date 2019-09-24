@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 using namespace std;
 
@@ -13,3 +14,4 @@ int main ()
 
     return 0; 
 }
+just a funny thing that didn't work */
