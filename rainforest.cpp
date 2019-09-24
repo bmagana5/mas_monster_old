@@ -119,12 +119,13 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[4] = {
+Image img[5] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
-    "./images/umbrella.png" };
-
+    "./images/umbrella.png",
+    "./images/scroll2.jpg"};
+	
 class Global {
     public:
 	int done;
@@ -134,6 +135,7 @@ class Global {
 	GLuint forestTexture;
 	GLuint forestTransTexture;
 	GLuint umbrellaTexture;
+	GLuint creditsTexture;
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -406,6 +408,7 @@ void initOpengl(void)
     glGenTextures(1, &g.silhouetteTexture);
     glGenTextures(1, &g.forestTexture);
     glGenTextures(1, &g.umbrellaTexture);
+    glGenTextures(1, &g.creditsTexture);
     //-------------------------------------------------------------------------
     //bigfoot
     //
@@ -419,6 +422,15 @@ void initOpengl(void)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
 	    GL_RGB, GL_UNSIGNED_BYTE, img[0].data);
     //-------------------------------------------------------------------------
+    //credits
+    glBindTexture(GL_TEXTURE_2D, g.creditsTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3,
+	    img[1].width, img[1].height,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
+    //------------------------------------------------------------------------
     //
     //silhouette
     //this is similar to a sprite graphic
@@ -959,8 +971,7 @@ void render()
     //dumb bitch edit
     if(g.showCredits)
     {
-    	showCredits(r);
-	printf("showcred\n");
+    	showCredits(r); //g.creditsTexture
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
@@ -987,8 +998,6 @@ void render()
     r.bot = g.yres - 20;
     r.left = 10;
     r.center = 0;
-    //void printBriansName(Rect);
-    //void displayGracelove(Rect);
 
     ggprint8b(&r, 16, c, "B - Bigfoot");
     ggprint8b(&r, 16, c, "C - Credits");
@@ -999,6 +1008,5 @@ void render()
     ggprint8b(&r, 16, c, "R - Rain");
     ggprint8b(&r, 16, c, "D - Deflection");
     ggprint8b(&r, 16, c, "N - Sounds");
-   // printBriansName(r);
 }
 
