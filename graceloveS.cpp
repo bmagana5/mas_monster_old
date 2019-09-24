@@ -1,8 +1,8 @@
-
 #include "fonts.h"
-
-void displayGracelove (Rect r)
+#include <stdio.h>
+void displayGracelove(Rect r)
 {
-	ggprint8b(&r, 16, 0x00ffff00, "Gracelove");
+    	r.bot = 250;
+	r.left = 300;
+	ggprint8b(&r, 50, 0x00ffff00, "Gracelove");
 }
-

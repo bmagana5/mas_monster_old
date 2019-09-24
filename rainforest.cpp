@@ -43,6 +43,9 @@ typedef Flt	Matrix[4][4];
 const float timeslice = 1.0f;
 const float gravity = -0.2f;
 #define ALPHA 1
+//----------------------------------------------------------------------------
+//user defined prototypes
+extern void showCredits(Rect);
 
 //-----------------------------------------------------------------------------
 //Setup timers
@@ -546,6 +549,7 @@ int checkKeys(XEvent *e)
 	    break;
 	case XK_c:
 	    g.showCredits ^= 1;
+	    break;
 	case XK_d:
 	    g.deflection ^= 1;
 	    break;
@@ -952,7 +956,12 @@ void render()
 	}
 	glDisable(GL_ALPHA_TEST);
     }
-
+    //dumb bitch edit
+    if(g.showCredits)
+    {
+    	showCredits(r);
+	printf("showcred\n");
+    }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
     //glBegin(GL_QUADS);
@@ -978,8 +987,9 @@ void render()
     r.bot = g.yres - 20;
     r.left = 10;
     r.center = 0;
-    void printBriansName(Rect);
-    void displayGracelove(Rect);
+    //void printBriansName(Rect);
+    //void displayGracelove(Rect);
+
     ggprint8b(&r, 16, c, "B - Bigfoot");
     ggprint8b(&r, 16, c, "C - Credits");
     ggprint8b(&r, 16, c, "F - Forest");
@@ -989,6 +999,6 @@ void render()
     ggprint8b(&r, 16, c, "R - Rain");
     ggprint8b(&r, 16, c, "D - Deflection");
     ggprint8b(&r, 16, c, "N - Sounds");
-    printBriansName(r);
+   // printBriansName(r);
 }
 
