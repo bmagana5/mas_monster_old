@@ -118,7 +118,7 @@ public:
 };
 Image img[4] = {
 "./images/bigfoot.png",
-"./images/forest.png",
+"./images/creepyforest.jpg",
 "./images/forestTrans.png",
 "./images/umbrella.png" };
 
@@ -975,6 +975,7 @@ void render()
 	r.left = 10;
 	r.center = 0;
 	void printBriansName(Rect);
+	void displayGracelove(Rect);
 	ggprint8b(&r, 16, c, "B - Bigfoot");
 	ggprint8b(&r, 16, c, "F - Forest");
 	ggprint8b(&r, 16, c, "S - Silhouette");
