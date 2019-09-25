@@ -1,5 +1,7 @@
 #include "fonts.h"
-#include <stdio.h>
+#include <math.h>
+#include <GL/glx.h>
+
 void printBriansName(Rect r)
 {
     	r.bot = 200;
