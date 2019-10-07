@@ -1,3 +1,9 @@
+/* Angela Tante
+ * CMPS 3350
+ *
+ * hi this is my file!
+*/
+
 #include "fonts.h"
 #include <stdio.h>
 #include <GL/glx.h>
