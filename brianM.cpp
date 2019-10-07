@@ -1,3 +1,5 @@
+// Brian Magana
+//
 #include "fonts.h"
 #include <math.h>
 #include <GL/glx.h>
