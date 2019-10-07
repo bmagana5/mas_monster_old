@@ -1,3 +1,4 @@
+//Name: Krystal Raynes
 //hi this is my source code
 #include "fonts.h"
 #include <GL/glx.h>
