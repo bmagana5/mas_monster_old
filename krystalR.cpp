@@ -4,20 +4,17 @@
 //----------------------CREDITS BEGIN------------------------------------//
 #include "fonts.h"
 #include <GL/glx.h>
-extern void printBriansName(Rect);
-extern void displayGracelove(Rect);
-extern void printAngela(Rect);
-void printKrystal(Rect);
+//extern void printBriansName(Rect);
+//extern void displayGracelove(Rect);
+//extern void printAngela(Rect);
+//void printKrystal(Rect);
+extern void credits(Rect);
 
 void showCredits(Rect r)
 {
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    printBriansName(r);
-    displayGracelove(r);
-    printAngela(r);
-    printKrystal(r);
+    credits(r);
 }
 
 void printKrystal(Rect r)
