@@ -6,7 +6,7 @@ all: rainforest
 
 
 rainforest: rainforest.cpp log.cpp brianM.cpp krystalR.cpp graceloveS.cpp angelaT.cpp
-	g++ $(CFLAGS) rainforest.cpp brianM.cpp krystalR.cpp graceloveS.cpp angelaT.cpp log.cpp libggfonts.a -Wall -Wextra $(LFLAGS) -o rainforest
+	g++ $(CFLAGS) rainforest.cpp brianM.cpp krystalR.cpp graceloveS.cpp angelaT.cpp log.cpp libggfonts.a -Wall -Wextra -lcrypto -lssl $(LFLAGS) -o rainforest
 
 
 clean:
