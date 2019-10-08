@@ -46,7 +46,7 @@ const float gravity = -0.2f;
 //----------------------------------------------------------------------------
 //user defined prototypes
 extern void showCredits(Rect);
-extern void highScore(Rect);
+extern void highScore(char*);
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -147,6 +147,7 @@ class Global {
 	int deflection;
 	int showCredits;
 	int highScore;
+	char buf[256];
 	Global() {
 	    logOpen();
 	    done=0;
@@ -568,6 +569,7 @@ int checkKeys(XEvent *e)
     }
     switch (key) {
 	case XK_e:
+	    highScore(g.buf);	
 	    g.highScore ^= 1;
 	    break;
 	case XK_b:
@@ -993,7 +995,12 @@ void render()
 
     if (g.highScore)
     {
-    	highScore(r);	
+	glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+	r.bot = 300;
+        r.left = 300;
+	
+        ggprint8b(&r, 10, 0x00ffff00, g.buf);
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);

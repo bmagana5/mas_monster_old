@@ -61,8 +61,7 @@ void printKrystal(Rect r)
 const int MAX_READ_ERRORS = 100;
 
 
-void highScore(Rect r) {
-//void highScore(int argc, char *argv[]){
+void highScore(char* buf) {
     BIO *ssl_setup_bio(void);
     void show_cert_data(SSL *ssl, BIO *outbio, const char *hostname);
     void set_to_non_blocking(const int sock);
@@ -79,14 +78,8 @@ void highScore(Rect r) {
     char pagename[256] = "/~bmagana/3350/project/score.php";
     int port = PORT;
     int bytes, nreads, nerrs;
-    char buf[256];
+    //char buf[256];
     int ret;
-    /*//Get any command-line arguments.
-    if (argc > 1)
-	strcpy(hostname, argv[1]);
-    if (argc > 2)
-	strcpy(pagename, argv[2]);
-    */
 
     //Setup the SSL BIO
     outbio = ssl_setup_bio();
@@ -137,7 +130,7 @@ void highScore(Rect r) {
     //We can take this approach because our socket is non-blocking.
     //Start with an error condition.
     bytes = -1;
-    memset(buf, '\0', sizeof(buf));
+    memset(buf, '\0', 256);
     while(bytes <= 0){
 	bytes = SSL_read(ssl, buf, sizeof(buf));
 	//A slight pause can cause fewer reads to be needed.
@@ -149,15 +142,14 @@ void highScore(Rect r) {
     //Allow for some read errors to happen, while getting the complete data.
     nerrs = 0;
     while(bytes >= 0 && nerrs < MAX_READ_ERRORS){
+	
 	write(STDOUT_FILENO, buf, bytes);
-	memset(buf, '\0', sizeof(buf));
+	memset(buf, '\0', 256);
 	++nreads;
-	bytes = SSL_read(ssl, buf, sizeof(buf));
+	bytes = SSL_read(ssl, buf, 256);
 	if (bytes == 0) ++nerrs; else nerrs = 0;
 	//A slight pause can cause fewer reads to be needed.
 	usleep(20000);
-    	glClearColor(0, 0, 0, 0);
-    	glClear(GL_COLOR_BUFFER_BIT);
     }
     printf("\nn calls to ssl_read(): %i\n", nreads); fflush(stdout);
     //Cleanup.
