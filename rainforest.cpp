@@ -46,7 +46,7 @@ const float gravity = -0.2f;
 //----------------------------------------------------------------------------
 //user defined prototypes
 extern void showCredits(Rect);
-extern void highScore();
+extern void highScore(Rect);
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -119,12 +119,13 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[5] = {
+Image img[6] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
-    "./images/scroll2.jpg"};
+    "./images/scroll2.jpg",
+    "./images/imag3.png"};
 	
 class Global {
     public:
@@ -136,6 +137,7 @@ class Global {
 	GLuint forestTransTexture;
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
+	GLuint graceloveTexture;
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -411,6 +413,7 @@ void initOpengl(void)
     glGenTextures(1, &g.forestTexture);
     glGenTextures(1, &g.umbrellaTexture);
     glGenTextures(1, &g.creditsTexture);
+    glGenTextures(1, &g.graceloveTexture);
     //-------------------------------------------------------------------------
     //bigfoot
     //
@@ -493,6 +496,15 @@ void initOpengl(void)
     free(ftData);
     //glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
     //GL_RGB, GL_UNSIGNED_BYTE, bigfootImage->data);
+    //-------------------------------------------------------------------------
+    // Gracelove
+    glBindTexture(GL_TEXTURE_2D, g.graceloveTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3,
+	    img[6].width, img[6].height,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
     //-------------------------------------------------------------------------
 }
 
@@ -981,7 +993,7 @@ void render()
 
     if (g.highScore)
     {
-    	highScore();
+    	highScore(r);	
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
