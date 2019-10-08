@@ -61,7 +61,7 @@ void printKrystal(Rect r)
 const int MAX_READ_ERRORS = 100;
 
 
-void highScore(){
+void highScore(Rect r) {
 //void highScore(int argc, char *argv[]){
     BIO *ssl_setup_bio(void);
     void show_cert_data(SSL *ssl, BIO *outbio, const char *hostname);
@@ -156,6 +156,8 @@ void highScore(){
 	if (bytes == 0) ++nerrs; else nerrs = 0;
 	//A slight pause can cause fewer reads to be needed.
 	usleep(20000);
+    	glClearColor(0, 0, 0, 0);
+    	glClear(GL_COLOR_BUFFER_BIT);
     }
     printf("\nn calls to ssl_read(): %i\n", nreads); fflush(stdout);
     //Cleanup.
