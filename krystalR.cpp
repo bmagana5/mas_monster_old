@@ -1,5 +1,7 @@
 //Name: Krystal Raynes
 //hi this is my source code
+
+//----------------------CREDITS BEGIN------------------------------------//
 #include "fonts.h"
 #include <GL/glx.h>
 extern void printBriansName(Rect);
@@ -11,7 +13,6 @@ void showCredits(Rect r)
 {
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-    //glBindTexture(GL_TEXTURE_2D, g.creditsTexture);
 
     printBriansName(r);
     displayGracelove(r);
@@ -25,7 +26,11 @@ void printKrystal(Rect r)
     r.left = 300;
     ggprint8b(&r, 50, 0x00ffff00, "Krystal");
 }
-//---------------------------------------------------------------------//
+
+//------------------------CREDITS END------------------------------------//
+
+
+//---------------------------PHP BEGIN-----------------------------------//
 //lab3sget.c
 //Written by: Gordon Griesel
 //Date:       Winter 2019
@@ -37,10 +42,10 @@ void printKrystal(Rect r)
 //  
 //Usage:
 //  ./lab3sget <host> <page>
-//
+
 //The program will contact a web server with host and page, and receive
 //back the page requested or other information.
-//
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -56,10 +61,11 @@ void printKrystal(Rect r)
 
 #define PORT 443
 #define USERAGENT "CMPS-3350"
-const MAX_READ_ERRORS = 100;
+const int MAX_READ_ERRORS = 100;
 
 
-void highScore(int argc, char *argv[]){
+void highScore(){
+//void highScore(int argc, char *argv[]){
     BIO *ssl_setup_bio(void);
     void show_cert_data(SSL *ssl, BIO *outbio, const char *hostname);
     void set_to_non_blocking(const int sock);
@@ -67,7 +73,7 @@ void highScore(int argc, char *argv[]){
     struct hostent *host;
     struct sockaddr_in addr;
     BIO *outbio = NULL;
-    SSL_METHOD *method;
+    const SSL_METHOD *method;
     SSL_CTX *ctx;
     SSL *ssl;
     char req[1000];
@@ -78,11 +84,13 @@ void highScore(int argc, char *argv[]){
     int bytes, nreads, nerrs;
     char buf[256];
     int ret;
-    //Get any command-line arguments.
+    /*//Get any command-line arguments.
     if (argc > 1)
 	strcpy(hostname, argv[1]);
     if (argc > 2)
 	strcpy(pagename, argv[2]);
+    */
+
     //Setup the SSL BIO
     outbio = ssl_setup_bio();
     //Initialize the SSL library
@@ -104,7 +112,8 @@ void highScore(int argc, char *argv[]){
     if (connect(sd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
 	BIO_printf(outbio, 
 		"%s: Cannot connect to host %s [%s] on port %d.\n", 
-		argv[0], hostname, inet_ntoa(addr.sin_addr), port);
+		//argv[0], hostname, inet_ntoa(addr.sin_addr), port);
+		hostname, inet_ntoa(addr.sin_addr), port);
     }
     
     //Connect using the SSL certificate.
@@ -122,9 +131,10 @@ void highScore(int argc, char *argv[]){
 	    pagename, hostname, USERAGENT);
     req_len = strlen(req);
     ret = SSL_write(ssl, req, req_len);
-    if (ret <= 0)
-	fprintf(stderr, "ERROR: SSL_write\n"); fflush(stderr);
-    
+    if (ret <= 0){
+	fprintf(stderr, "ERROR: SSL_write\n");
+	fflush(stderr);
+    }
     //Get data returned from the server.
     //First, do priming read.
     //We can take this approach because our socket is non-blocking.
@@ -155,7 +165,6 @@ void highScore(int argc, char *argv[]){
     SSL_free(ssl);
     close(sd);
     SSL_CTX_free(ctx);
-    return 0;
 }
 
 BIO *ssl_setup_bio(void){
@@ -174,8 +183,7 @@ BIO *ssl_setup_bio(void){
 void show_cert_data(SSL *ssl, BIO *outbio, const char *hostname) {
     //Display ssl certificate data here.
     //Get the remote certificate into the X509 structure
-    printf("-----------------------i
-	    ---------------------------------------\n");
+    printf("--------------------------------------------------------------\n");
     printf("Certificate data...\n");
     X509 *cert;
     X509_NAME *certname;
@@ -195,8 +203,7 @@ void show_cert_data(SSL *ssl, BIO *outbio, const char *hostname) {
     X509_NAME_print_ex(outbio, certname, 0, 0);
     if (BIO_printf(outbio, "\n\n") < 0)
 	fprintf(stderr, "ERROR: BIO_printf\n");
-    printf("----------------------------------
-	    ----------------------------\n");
+    printf("------------------------------------------------------------\n");
 }
 
 void set_to_non_blocking(const int sock){
@@ -215,4 +222,4 @@ void set_to_non_blocking(const int sock){
 	exit(EXIT_FAILURE);
     }
 }
-
+//--------------------------------PHP END--------------------------------//
