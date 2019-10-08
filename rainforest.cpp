@@ -46,7 +46,7 @@ const float gravity = -0.2f;
 //----------------------------------------------------------------------------
 //user defined prototypes
 extern void showCredits(Rect);
-
+extern void highScore();
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -144,6 +144,7 @@ class Global {
 	int showUmbrella;
 	int deflection;
 	int showCredits;
+	int highScore;
 	Global() {
 	    logOpen();
 	    done=0;
@@ -157,6 +158,7 @@ class Global {
 	    showUmbrella=0;
 	    deflection=0;
 	    showCredits=0;
+	    highScore=0;
 	}
 	~Global() {
 	    logClose();
@@ -553,6 +555,9 @@ int checkKeys(XEvent *e)
 	return 0;
     }
     switch (key) {
+	case XK_e:
+	    g.highScore ^= 1;
+	    break;
 	case XK_b:
 	    g.showBigfoot ^= 1;
 	    if (g.showBigfoot) {
@@ -1008,5 +1013,6 @@ void render()
     ggprint8b(&r, 16, c, "R - Rain");
     ggprint8b(&r, 16, c, "D - Deflection");
     ggprint8b(&r, 16, c, "N - Sounds");
+    ggprint8b(&r, 16, c, "E - Score Board");
 }
 
