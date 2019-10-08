@@ -978,6 +978,11 @@ void render()
     {
     	showCredits(r); //g.creditsTexture
     }
+
+    if (g.highScore)
+    {
+    	highScore();
+    }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
     //glBegin(GL_QUADS);
