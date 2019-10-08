@@ -503,8 +503,8 @@ void initOpengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, 3,
-	    img[6].width, img[6].height,
-	    0, GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
+	    img[5].width, img[5].height,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
     //-------------------------------------------------------------------------
 }
 
