@@ -1,11 +1,11 @@
 //Name: Krystal Raynes
 //hi this is my source code
-//--------------------------FOUR STEPS OF DEBUGGING---------------------//
+//--------------------------FOUR STEPS OF DEBUGGING---------------------------//
 //1 Identify
 //2 Isolate
 //3 Fix
 //4 Review
-//----------------------------CREDITS BEGIN-----------------------------------//
+//-------------------------------CREDITS BEGIN--------------------------------//
 #include "fonts.h"
 #include <GL/glx.h>
 //extern void printBriansName(Rect);
@@ -28,19 +28,17 @@ void printKrystal(Rect r)
     ggprint8b(&r, 50, 0x00ffff00, "Krystal");
 }
 
-//------------------------CREDITS END------------------------------------//
+//-------------------------------CREDITS END----------------------------------//
 
 
-//---------------------------PHP BEGIN-----------------------------------//
+//--------------------------------PHP BEGIN-----------------------------------//
 //lab3sget.c
 //Written by: Gordon Griesel
-//Date:       Winter 2019
 //Purpose:    Example of HTTP request using SSL.
 //            Used to contact a web server and receive a page as text.
 //--------------------------------------------------------------------
 //Build:
 //  gcc lab3sget.c -Wall -olab3sget -lssl -lcrypto
-//  
 //Usage:
 //  ./lab3sget <host> <page>
 
@@ -221,4 +219,4 @@ void set_to_non_blocking(const int sock)
 	exit(EXIT_FAILURE);
     }
 }
-//--------------------------------PHP END--------------------------------//
+//--------------------------------PHP END-------------------------------------//
