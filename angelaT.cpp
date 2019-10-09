@@ -40,3 +40,13 @@ void showAngelaPicture (int x, int y, float tx, float ty, GLuint picid)
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_ALPHA_TEST);
 }
+
+/* Quiz Debugging 
+ *
+ * 1. Recognize that the bug exists 
+ * 2. Isolate the source of the bug
+ * 3. Identify the cause of the bug
+ * 4. Determine the fix for the bug
+ * 5. Apply the fix then test your program.
+ *
+*/
