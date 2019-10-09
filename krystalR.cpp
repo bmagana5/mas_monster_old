@@ -1,7 +1,11 @@
 //Name: Krystal Raynes
 //hi this is my source code
-
-//----------------------CREDITS BEGIN------------------------------------//
+//--------------------------FOUR STEPS OF DEBUGGING---------------------//
+//1 Identify
+//2 Isolate
+//3 Fix
+//4 Review
+//----------------------------CREDITS BEGIN-----------------------------------//
 #include "fonts.h"
 #include <GL/glx.h>
 //extern void printBriansName(Rect);
