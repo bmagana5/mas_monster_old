@@ -11,7 +11,7 @@ void displayGracelove(Rect r)
 	ggprint8b(&r, 50, 0x00ffff00, "Gracelove");
 }
 
-/*void showPicture(int x, int y, float tx, float ty, GLuint textid)
+void showPicture(int x, int y, float tx, float ty, GLuint textid)
 {
     int wid = 40;
     float fx = 0.0f;
@@ -34,4 +34,4 @@ void displayGracelove(Rect r)
     glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_ALPHA_TEST);
-}*/
+}
