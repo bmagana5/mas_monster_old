@@ -46,7 +46,7 @@ const float gravity = -0.2f;
 //----------------------------------------------------------------------------
 //user defined prototypes
 extern void showCredits(Rect);
-
+extern void highScore(char *, char *);
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -119,12 +119,13 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[5] = {
+Image img[6] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
-    "./images/scroll2.jpg"};
+    "./images/scroll2.jpg",
+    "./images/imag3.png"};
 	
 class Global {
     public:
@@ -136,6 +137,7 @@ class Global {
 	GLuint forestTransTexture;
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
+	GLuint graceloveTexture;
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -144,6 +146,9 @@ class Global {
 	int showUmbrella;
 	int deflection;
 	int showCredits;
+	int highScore;
+	char buf[2048];
+	char tmpbuf[256];
 	Global() {
 	    logOpen();
 	    done=0;
@@ -157,6 +162,7 @@ class Global {
 	    showUmbrella=0;
 	    deflection=0;
 	    showCredits=0;
+	    highScore=0;
 	}
 	~Global() {
 	    logClose();
@@ -409,6 +415,7 @@ void initOpengl(void)
     glGenTextures(1, &g.forestTexture);
     glGenTextures(1, &g.umbrellaTexture);
     glGenTextures(1, &g.creditsTexture);
+    glGenTextures(1, &g.graceloveTexture);
     //-------------------------------------------------------------------------
     //bigfoot
     //
@@ -492,6 +499,15 @@ void initOpengl(void)
     //glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
     //GL_RGB, GL_UNSIGNED_BYTE, bigfootImage->data);
     //-------------------------------------------------------------------------
+    // Gracelove
+    glBindTexture(GL_TEXTURE_2D, g.graceloveTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3,
+	    img[5].width, img[5].height,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
+    //-------------------------------------------------------------------------
 }
 
 void initSounds()
@@ -553,6 +569,14 @@ int checkKeys(XEvent *e)
 	return 0;
     }
     switch (key) {
+	case XK_e:
+            if (!g.highScore) {
+	    	highScore(g.buf, g.tmpbuf);
+		g.highScore ^= 1;
+	    } else {
+                g.highScore = 0;
+	    }	    
+	    break;
 	case XK_b:
 	    g.showBigfoot ^= 1;
 	    if (g.showBigfoot) {
@@ -973,6 +997,27 @@ void render()
     {
     	showCredits(r); //g.creditsTexture
     }
+    if (g.highScore)
+    {
+	glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+	r.bot = 300;
+        r.left = 300;
+	char tmp[20] = "";
+	int i = 0;
+	while (i < (int)strlen(g.buf)) {
+		if (g.buf[i] == '*') {
+			i++;
+			while (g.buf[i] != '&') {
+				strncat(tmp, &g.buf[i], 1);
+				i++;
+			}
+			strcat(tmp, "\n");
+			ggprint12(&r, 20, 0xffff0000, tmp);
+			strcpy(tmp, "");
+		} else i++;
+	}
+    }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
     //glBegin(GL_QUADS);
@@ -1008,5 +1053,6 @@ void render()
     ggprint8b(&r, 16, c, "R - Rain");
     ggprint8b(&r, 16, c, "D - Deflection");
     ggprint8b(&r, 16, c, "N - Sounds");
+    ggprint8b(&r, 16, c, "E - Score Board");
 }
 
