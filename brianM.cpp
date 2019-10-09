@@ -6,7 +6,7 @@
 // 	2. isolate the bug
 // 		- separate buggy code from main code and test it
 // 	3. fix it
-// 	4. review that it the fix is working properly
+// 	4. review that the fix is working properly
 #include "fonts.h"
 #include <math.h>
 #include <GL/glx.h>
