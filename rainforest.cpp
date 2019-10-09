@@ -124,13 +124,15 @@ Image img[6] = {
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
-    "./images/scroll2.jpg",
+    "./images/krystalPic.png",
     "./images/imag3.png"};
 	
 class Global {
     public:
 	int done;
 	int xres, yres;
+
+	//names of texutres
 	GLuint bigfootTexture;
 	GLuint silhouetteTexture;
 	GLuint forestTexture;
@@ -138,6 +140,7 @@ class Global {
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
 	GLuint graceloveTexture;
+	
 	int showBigfoot;
 	int forest;
 	int silhouette;
