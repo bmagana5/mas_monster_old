@@ -1,5 +1,12 @@
 // Brian Magana
-//
+// 
+// four steps of debugging:
+// 	1. identify the bug
+// 		- figure out where it's located and why it's happening
+// 	2. isolate the bug
+// 		- separate buggy code from main code and test it
+// 	3. fix it
+// 	4. review that it the fix is working properly
 #include "fonts.h"
 #include <math.h>
 #include <GL/glx.h>
