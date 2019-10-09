@@ -1,4 +1,10 @@
 // Gracelove Simons
+//
+// Debugging Quiz
+// 1. reproduce bug
+// 2. locate the bad code
+// 3. fix the code
+// 4. test the fix and the whole program
 
 #include "fonts.h"
 #include <stdio.h>
