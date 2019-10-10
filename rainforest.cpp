@@ -45,8 +45,9 @@ const float gravity = -0.2f;
 #define ALPHA 1
 //----------------------------------------------------------------------------
 //user defined prototypes
-extern void showCredits(Rect,int, int, float, GLuint);
+extern void showCredits(Rect/*,int, int, float, float, GLuint*/);
 extern void highScore(char*);
+extern void showPicture(GLuint, int, int);
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -119,13 +120,14 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[6] = {
+Image img[7] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
     "./images/scroll2.jpg",
-    "./images/imag3.png"};
+    "./images/imag3.png",
+    "./images/brianpic.png"};
 	
 class Global {
     public:
@@ -138,6 +140,7 @@ class Global {
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
 	GLuint graceloveTexture;
+	GLuint brianTexture;
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -380,6 +383,9 @@ unsigned char *buildAlphaData(Image *img)
     return newdata;
 }
 
+GLuint glTexture;
+GLuint brTexture;
+
 void initOpengl(void)
 {
     //OpenGL initialization
@@ -499,14 +505,26 @@ void initOpengl(void)
     //GL_RGB, GL_UNSIGNED_BYTE, bigfootImage->data);
     //-------------------------------------------------------------------------
     // Gracelove
+    w = img[5].width;
+    h = img[5].height;
     glBindTexture(GL_TEXTURE_2D, g.graceloveTexture);
     //
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3,
-	    img[5].width, img[5].height,
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
 	    0, GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
+    glTexture = g.graceloveTexture;
     //-------------------------------------------------------------------------
+    //Brian 
+    w = img[6].width;
+    h = img[6].height;
+    glBindTexture(GL_TEXTURE_2D, g.brianTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
+    brTexture = g.brianTexture;
 }
 
 void initSounds()
@@ -990,8 +1008,12 @@ void render()
     //dumb bitch edit
     if(g.showCredits)
     {
-    	showCredits(r, img[5].width, img[5].height, 0.0f, 
-			g.graceloveTexture); //g.creditsTexture
+    	showCredits(r/*, img[5].width, img[5].height, 0.0f, 0.0f, 
+			glTexture*/); //g.creditsTexture
+	showPicture(glTexture, 400, 250);
+	showPicture(brTexture, 200, 200);
+	/*showPicture(glTexture);
+	showPicture(glTexture);*/
 	
     }
 
