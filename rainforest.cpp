@@ -45,14 +45,11 @@ const float gravity = -0.2f;
 #define ALPHA 1
 //----------------------------------------------------------------------------
 //user defined prototypes
-<<<<<<< HEAD
 extern void showCredits(Rect);
 extern void highScore(char *, char *);
-=======
 extern void showCredits(Rect/*,int, int, float, float, GLuint*/);
 extern void highScore(char*);
 extern void showPicture(GLuint, int, int);
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -125,19 +122,15 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[7] = {
+Image img[8] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
-<<<<<<< HEAD
-    "./images/krystalPic.png",
-    "./images/imag3.png"};
-=======
     "./images/scroll2.jpg",
     "./images/imag3.png",
-    "./images/brianpic.png"};
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
+    "./images/brianpic.png",
+    "./images/krystalPic.png"};
 	
 class Global {
     public:
@@ -152,11 +145,8 @@ class Global {
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
 	GLuint graceloveTexture;
-<<<<<<< HEAD
-	
-=======
 	GLuint brianTexture;
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
+	GLuint krystalTexture;
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -402,6 +392,7 @@ unsigned char *buildAlphaData(Image *img)
 
 GLuint glTexture;
 GLuint brTexture;
+GLuint krTexture;
 
 void initOpengl(void)
 {
@@ -438,6 +429,8 @@ void initOpengl(void)
     glGenTextures(1, &g.umbrellaTexture);
     glGenTextures(1, &g.creditsTexture);
     glGenTextures(1, &g.graceloveTexture);
+    glGenTextures(1, &g.brianTexture);
+    glGenTextures(1, &g.krystalTexture);
     //-------------------------------------------------------------------------
     //bigfoot
     //
@@ -542,6 +535,17 @@ void initOpengl(void)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
 	    0, GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
     brTexture = g.brianTexture;
+    //-------------------------------------------------------------------------
+    //Krystal 
+    w = img[7].width;
+    h = img[7].height;
+    glBindTexture(GL_TEXTURE_2D, g.krystalTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
+	    0, GL_RGB, GL_UNSIGNED_BYTE, img[7].data);
+    krTexture = g.krystalTexture;
 }
 
 void initSounds()
@@ -1033,8 +1037,8 @@ void render()
 			glTexture*/); //g.creditsTexture
 	showPicture(glTexture, 400, 250);
 	showPicture(brTexture, 200, 200);
-	/*showPicture(glTexture);
-	showPicture(glTexture);*/
+	showPicture(krTexture, 400, 100);
+	/*showPicture(glTexture);*/
 	
     }
     if (g.highScore)
