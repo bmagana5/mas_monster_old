@@ -1,0 +1,25 @@
+================================== TO DO =======================================
+1) 10/15: main menu - grace
+	-center menu
+	-start game . . .space bar
+	-show credits . . . c 
+	-show score board . . . e
+	
+2) 10/15: logo - angela
+3) one ingredient - angela
+4) 10/18: background gif - brian
+5) 10/18: walk cycle - krystal
+6) a rock - angela
+
+================================= IN PROGRESS ==================================
+-SPRITE CREATION
+
+
+==================================== TESTING ===================================
+-patience
+
+======================================== DONE =================================
+-CREDITS...............................................................Krystal 
+-CREDIT PICS.............................................................Grace
+-PHP HIGH SCORE DISPLAY..................................................Brian
+-
