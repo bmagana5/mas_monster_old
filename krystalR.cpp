@@ -13,12 +13,14 @@
 //extern void printAngela(Rect);
 //void printKrystal(Rect);
 extern void credits(Rect);
+//extern void showPicture(int, int, float, float, GLuint);
 
-void showCredits(Rect r)
+void showCredits(Rect r/*, int x, int y, float tx, float ty, GLuint textid*/)
 {
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
+   // glClearColor(0, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT);
     credits(r);
+    //showPicture(x, y, tx, ty, textid);
 }
 
 void printKrystal(Rect r)
