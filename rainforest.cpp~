@@ -45,14 +45,8 @@ const float gravity = -0.2f;
 #define ALPHA 1
 //----------------------------------------------------------------------------
 //user defined prototypes
-<<<<<<< HEAD
-extern void showCredits(Rect);
-extern void highScore(char *, char *);
-=======
-extern void showCredits(Rect/*,int, int, float, float, GLuint*/);
+extern void showCredits(Rect,int, int, float, GLuint);
 extern void highScore(char*);
-extern void showPicture(GLuint, int, int);
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
 //-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
@@ -125,26 +119,18 @@ class Image {
 		unlink(ppmname);
 	}
 };
-Image img[7] = {
+Image img[6] = {
     "./images/bigfoot.png",
     "./images/creepyforest.jpg",
     "./images/forestTrans.png",
     "./images/umbrella.png",
-<<<<<<< HEAD
-    "./images/krystalPic.png",
-    "./images/imag3.png"};
-=======
     "./images/scroll2.jpg",
-    "./images/imag3.png",
-    "./images/brianpic.png"};
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
+    "./images/imag3.png"};
 	
 class Global {
     public:
 	int done;
 	int xres, yres;
-
-	//names of texutres
 	GLuint bigfootTexture;
 	GLuint silhouetteTexture;
 	GLuint forestTexture;
@@ -152,11 +138,6 @@ class Global {
 	GLuint umbrellaTexture;
 	GLuint creditsTexture;
 	GLuint graceloveTexture;
-<<<<<<< HEAD
-	
-=======
-	GLuint brianTexture;
->>>>>>> e4bdb691fc248b945c1aa66d0f8cab38312217cf
 	int showBigfoot;
 	int forest;
 	int silhouette;
@@ -166,8 +147,7 @@ class Global {
 	int deflection;
 	int showCredits;
 	int highScore;
-	char buf[2048];
-	char tmpbuf[256];
+	char buf[256];
 	Global() {
 	    logOpen();
 	    done=0;
@@ -400,9 +380,6 @@ unsigned char *buildAlphaData(Image *img)
     return newdata;
 }
 
-GLuint glTexture;
-GLuint brTexture;
-
 void initOpengl(void)
 {
     //OpenGL initialization
@@ -522,26 +499,14 @@ void initOpengl(void)
     //GL_RGB, GL_UNSIGNED_BYTE, bigfootImage->data);
     //-------------------------------------------------------------------------
     // Gracelove
-    w = img[5].width;
-    h = img[5].height;
     glBindTexture(GL_TEXTURE_2D, g.graceloveTexture);
     //
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
+    glTexImage2D(GL_TEXTURE_2D, 0, 3,
+	    img[5].width, img[5].height,
 	    0, GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
-    glTexture = g.graceloveTexture;
     //-------------------------------------------------------------------------
-    //Brian 
-    w = img[6].width;
-    h = img[6].height;
-    glBindTexture(GL_TEXTURE_2D, g.brianTexture);
-    //
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h,
-	    0, GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
-    brTexture = g.brianTexture;
 }
 
 void initSounds()
@@ -604,12 +569,8 @@ int checkKeys(XEvent *e)
     }
     switch (key) {
 	case XK_e:
-            if (!g.highScore) {
-	    	highScore(g.buf, g.tmpbuf);
-		g.highScore ^= 1;
-	    } else {
-                g.highScore = 0;
-	    }	    
+	    highScore(g.buf);	
+	    g.highScore ^= 1;
 	    break;
 	case XK_b:
 	    g.showBigfoot ^= 1;
@@ -1029,34 +990,19 @@ void render()
     //dumb bitch edit
     if(g.showCredits)
     {
-    	showCredits(r/*, img[5].width, img[5].height, 0.0f, 0.0f, 
-			glTexture*/); //g.creditsTexture
-	showPicture(glTexture, 400, 250);
-	showPicture(brTexture, 200, 200);
-	/*showPicture(glTexture);
-	showPicture(glTexture);*/
+    	showCredits(r, img[5].width, img[5].height, 0.0f, 
+			g.graceloveTexture); //g.creditsTexture
 	
     }
+
     if (g.highScore)
     {
 	glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 	r.bot = 300;
         r.left = 300;
-	char tmp[20] = "";
-	int i = 0;
-	while (i < (int)strlen(g.buf)) {
-		if (g.buf[i] == '*') {
-			i++;
-			while (g.buf[i] != '&') {
-				strncat(tmp, &g.buf[i], 1);
-				i++;
-			}
-			strcat(tmp, "\n");
-			ggprint12(&r, 20, 0xffff0000, tmp);
-			strcpy(tmp, "");
-		} else i++;
-	}
+	
+        ggprint8b(&r, 10, 0x00ffff00, g.buf);
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
