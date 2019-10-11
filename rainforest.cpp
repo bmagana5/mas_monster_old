@@ -45,10 +45,14 @@ const float gravity = -0.2f;
 #define ALPHA 1
 //----------------------------------------------------------------------------
 //user defined prototypes
+
 extern void showCredits(Rect/*,int, int, float, float, GLuint*/);
 extern void highScore(char*);
 extern void showPicture(GLuint, int, int);
-//-----------------------------------------------------------------------------
+extern void showCredits(Rect);
+extern void highScore(char *, char *);
+
+/-----------------------------------------------------------------------------
 //Setup timers
 //clock_gettime(CLOCK_REALTIME, &timePause);
 const double physicsRate = 1.0 / 30.0;
@@ -128,11 +132,15 @@ Image img[7] = {
     "./images/scroll2.jpg",
     "./images/imag3.png",
     "./images/brianpic.png"};
+    "./images/krystalPic.png",
+    "./images/imag3.png"};
 	
 class Global {
     public:
 	int done;
 	int xres, yres;
+
+	//names of texutres
 	GLuint bigfootTexture;
 	GLuint silhouetteTexture;
 	GLuint forestTexture;
@@ -150,7 +158,8 @@ class Global {
 	int deflection;
 	int showCredits;
 	int highScore;
-	char buf[256];
+	char buf[2048];
+	char tmpbuf[256];
 	Global() {
 	    logOpen();
 	    done=0;
@@ -587,8 +596,12 @@ int checkKeys(XEvent *e)
     }
     switch (key) {
 	case XK_e:
-	    highScore(g.buf);	
-	    g.highScore ^= 1;
+            if (!g.highScore) {
+	    	highScore(g.buf, g.tmpbuf);
+		g.highScore ^= 1;
+	    } else {
+                g.highScore = 0;
+	    }	    
 	    break;
 	case XK_b:
 	    g.showBigfoot ^= 1;
@@ -1016,15 +1029,26 @@ void render()
 	showPicture(glTexture);*/
 	
     }
-
     if (g.highScore)
     {
 	glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
 	r.bot = 300;
         r.left = 300;
-	
-        ggprint8b(&r, 10, 0x00ffff00, g.buf);
+	char tmp[20] = "";
+	int i = 0;
+	while (i < (int)strlen(g.buf)) {
+		if (g.buf[i] == '*') {
+			i++;
+			while (g.buf[i] != '&') {
+				strncat(tmp, &g.buf[i], 1);
+				i++;
+			}
+			strcat(tmp, "\n");
+			ggprint12(&r, 20, 0xffff0000, tmp);
+			strcpy(tmp, "");
+		} else i++;
+	}
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
