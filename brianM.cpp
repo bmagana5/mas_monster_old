@@ -9,6 +9,7 @@
 // 	4. review that the fix is working properly
 #include "fonts.h"
 #include <math.h>
+#include <string.h>
 #include <GL/glx.h>
 
 void printBriansName(Rect r)
@@ -18,27 +19,19 @@ void printBriansName(Rect r)
 	ggprint8b(&r, 50, 0x00ffff00, "Brian");
 }
 
-void showBriansPict(int x, int y, float tx, float ty, GLuint picid)
+void parseScores(Rect r, char *buf, char *tmp)
 {
-	int wid = 40;
-	float fx = 0.0f;
-	static float angle = 0.0f;
-
-	angle += 0.01;
-	fx = sin(angle);
-	y = y - 40;
-
-	glPushMatrix();
-	glTranslatef(x + (int)(fx*30.0), y, 0);
-	glColor3s(1.0, 1.0, 1.0);
-	glBindTexture(GL_TEXTURE_2D, picid);
-	glBegin(GL_QUADS);
-		glTexCoord2f(tx, ty+0.5); glVertex2i(-wid, -wid);
-		glTexCoord2f(tx, ty); glVertex2i(-wid, wid);
-		glTexCoord2f(tx+0.125, ty); glVertex2i(wid, wid);
-		glTexCoord2f(tx+0.125, ty+0.5); glVertex2i(wid, -wid);
-	glEnd();
-	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_ALPHA_TEST);
+	int i = 0;
+	while (i < (int)strlen(buf)) {
+		if (buf[i] == '*') {
+			i++;
+			while (buf[i] != '&') {
+				strncat(tmp, &buf[i], 1);
+				i++;
+			}
+			strcat(tmp, "\n");
+			ggprint12(&r, 20, 0xffff0000, tmp);
+			strcpy(tmp, "");
+		} else i++;
+	}
 }
