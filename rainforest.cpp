@@ -47,8 +47,7 @@ const float gravity = -0.2f;
 //user defined prototypes
 extern void showCredits(Rect);
 extern void highScore(char *, char *);
-extern void showCredits(Rect/*,int, int, float, float, GLuint*/);
-extern void highScore(char*);
+extern void parseScores(Rect, char *, char *);
 extern void showPicture(GLuint, int, int);
 //-----------------------------------------------------------------------------
 //Setup timers
@@ -1048,19 +1047,7 @@ void render()
 	r.bot = 300;
         r.left = 300;
 	char tmp[20] = "";
-	int i = 0;
-	while (i < (int)strlen(g.buf)) {
-		if (g.buf[i] == '*') {
-			i++;
-			while (g.buf[i] != '&') {
-				strncat(tmp, &g.buf[i], 1);
-				i++;
-			}
-			strcat(tmp, "\n");
-			ggprint12(&r, 20, 0xffff0000, tmp);
-			strcpy(tmp, "");
-		} else i++;
-	}
+	parseScores(r, g.buf, tmp);
     }
     glDisable(GL_TEXTURE_2D);
     //glColor3f(1.0f, 0.0f, 0.0f);
